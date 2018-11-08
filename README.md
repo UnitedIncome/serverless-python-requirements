@@ -72,6 +72,23 @@ It is important that the host of your private repositories has already been adde
 `$HOME/.ssh/known_hosts` file, as the install process will fail otherwise due to host authenticity
 failure.
 
+### Remote docker hosts
+
+If you have DOCKER_HOST set to a remote mahine, you must set the following option. This tells the plugin
+not to try and mount the local filesystem to the container (which will not work over a network). Instead
+it uses a Docker volume and copies the files across.
+
+Additionally, if you are in a corporate network and there is a proxy, you can define this in the `proxy` option. 
+This will set the http and https proxy inside the container.
+
+```yaml 
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    dockerRemoteHost: true
+    proxy: http://yourproxy:8080
+```
+
 [:checkered_flag: Windows notes](#checkered_flag-windows-dockerizepip-notes)
 
 ## Pipenv support :sparkles::cake::sparkles:
