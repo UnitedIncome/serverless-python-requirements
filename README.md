@@ -187,7 +187,18 @@ custom:
     strip: false
 ```
 
-### Lambda Layer
+Alternatively, you can selectively exclude packages matching a certain pattern by using the `stripExcludes` option.
+```yaml
+custom:
+  pythonRequirements:
+    slim: true
+    stripExcludes:
+      - '*/cv2/*'
+      - '*/scipy/*'
+```
+
+### Lamba Layer
+
 Another method for dealing with large dependencies is to put them into a
 [Lambda Layer](https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html).
 Simply add the `layer` option to the configuration.
