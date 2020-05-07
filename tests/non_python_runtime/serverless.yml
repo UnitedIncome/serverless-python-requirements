@@ -1,0 +1,35 @@
+service: sls-py-req-test-non-python
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+
+package:
+  exclude:
+    - "*"
+  include:
+    - "node_modules/**"
+    - "*.js"
+
+custom:
+  pythonRequirements:
+    zip: true
+    pythonBin: python
+
+functions:
+
+  python-func:
+    handler: pythonHandler.hello
+    runtime: python3.6
+    package:
+      individually: true
+      include:
+        - "!node_modules/**"
+        - "!*.js"
+        - "**/.py"
+
+  node-func:
+    handler: nodeHandler.hello
+
+plugins:
+  - serverless-python-requirements

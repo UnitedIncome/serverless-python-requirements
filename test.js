@@ -111,6 +111,8 @@ const listRequirementsZipFiles = filename => {
   const reqsZip = deasync(new JSZip().loadAsync(reqsBuffer));
   return Object.keys(reqsZip.files);
 };
+const hasDirectory = (directoryName, fileList) =>
+  fileList.filter(f => f.startsWith(directoryName + '/')).length > 0;
 
 const canUseDocker = () => {
   let result;
@@ -121,6 +123,51 @@ const canUseDocker = () => {
   }
   return result.status === 0;
 };
+
+const hasZippedRequirements = (t, zip) => {
+  t.true(
+    zip.includes(`.requirements.zip`),
+    'requirements zip not packaged for python'
+  );
+  t.true(
+    zip.includes(`unzip_requirements.py`),
+    'unzip_requirements.py not packaged for python'
+  );
+  t.false(
+    hasDirectory(`node_modules`, zip),
+    'node_modules packaged for python'
+  );
+  t.false(zip.includes(`nodeHandler.js`), 'nodeHandler.js packaged for python');
+};
+
+test('non-python runtime doesnt get zip requirements', t => {
+  process.chdir('tests/non_python_runtime');
+  const path = npm(['pack', '../..']);
+  npm(['i', path]);
+  sls(['package']);
+  const nodeZip = listZipFiles('.serverless/sls-py-req-test-non-python.zip');
+
+  t.false(
+    nodeZip.includes(`.requirements.zip`),
+    'requirements zip packaged for node'
+  );
+  t.false(
+    nodeZip.includes(`unzip_requirements.py`),
+    'unzip_requirements.py packaged for node'
+  );
+  t.true(
+    hasDirectory(`node_modules`, nodeZip),
+    'node_modules not packaged for node'
+  );
+  t.true(
+    nodeZip.includes(`nodeHandler.js`),
+    'nodeHandler.js packaged for node'
+  );
+  hasZippedRequirements(listZipFiles('.serverless/python-func1.zip'));
+  hasZippedRequirements(listZipFiles('.serverless/python-func2.zip'));
+
+  t.end();
+});
 
 test('default pythonBin can package flask with default options', t => {
   process.chdir('tests/base');

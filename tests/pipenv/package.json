@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "serverless-python-requirements": "file:serverless-python-requirements-5.0.0.tgz"
+    "serverless-python-requirements": "file:serverless-python-requirements-5.1.0.tgz"
   }
 }

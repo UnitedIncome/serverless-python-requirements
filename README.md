@@ -249,7 +249,7 @@ custom:
       name: ${self:provider.stage}-layerName
       description: Python requirements lambda layer
       compatibleRuntimes:
-        - python3.7
+        - python3.6
       licenseInfo: GPLv3
       allowedAccounts:
         - '*'
