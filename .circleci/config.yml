@@ -2,20 +2,10 @@ version: 2
 jobs:
   build:
     working_directory: ~/sls-py-req
-    machine:
-      image: circleci/classic
+    docker:
+      - image: circleci/python:3.6
     steps:
       - checkout
-      # Build python3.6. gross. (based on my gist here: https://git.io/vxMFG )
-      - run: |
-          sudo apt-get update
-          sudo apt-get install build-essential tk-dev libncurses5-dev libncursesw5-dev libreadline6-dev libdb5.3-dev libgdbm-dev libsqlite3-dev libssl-dev libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev
-          wget https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tar.xz
-          tar xf Python-3.6.5.tar.xz
-          cd Python-3.6.5
-          ./configure
-          make
-          sudo make altinstall
       # other deps
       - run: sudo apt -y update && sudo apt -y install python-pip python2.7 curl unzip
       # upgrade python3.6 pip to latest
@@ -30,7 +20,7 @@ jobs:
       # install nodejs
       - run: curl -sL https://deb.nodesource.com/setup_10.x | sudo bash - && sudo apt -y install nodejs
       # install serverless & depcheck
-      - run: npm install -g serverless
+      - run: npm install -U serverless
       # install deps
       - run: npm i
       # lint:

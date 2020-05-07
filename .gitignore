@@ -42,6 +42,3 @@ admin.env
 #PYTHON STUFF
 *.py[co]
 __pycache__
-
-#NODE STUFF
-package-lock.json
