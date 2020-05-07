@@ -12,7 +12,6 @@ const {
 const { injectAllRequirements } = require('./lib/inject');
 const { layerRequirements } = require('./lib/layer');
 const { installAllRequirements } = require('./lib/pip');
-const { pipfileToRequirements } = require('./lib/pipenv');
 const { pyprojectTomlToRequirements } = require('./lib/poetry');
 const { cleanup, cleanupCache } = require('./lib/clean');
 
@@ -156,7 +155,6 @@ class ServerlessPythonRequirements {
         return;
       }
       return BbPromise.bind(this)
-        .then(pipfileToRequirements)
         .then(pyprojectTomlToRequirements)
         .then(addVendorHelper)
         .then(installAllRequirements)
