@@ -553,3 +553,4 @@ package:
 - [@bweigel](https://github.com/bweigel) - adding the `slimPatternsAppendDefaults` option & fixing per-function packaging when some functions don't have requirements & Porting tests from bats to js!
 - [@squaresurf](https://github.com/squaresurf) - adding usePoetry option
 - [@david-mk-lawrence](https://github.com/david-mk-lawrence) - added Lambda Layer support
+
