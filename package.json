@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "eslint": "^5.16.0",
-    "prettier": "^1",
+    "prettier": "^2",
     "cross-spawn": "*",
     "tape": "*",
     "tape-promise": "*",
