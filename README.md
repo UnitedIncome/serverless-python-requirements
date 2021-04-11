@@ -71,7 +71,7 @@ custom:
     dockerSsh: true
 ```
 
-The `dockerSsh` option will mount your `$HOME/.ssh/id_rsa` and `$HOME/.ssh/known_hosts` as a
+The `dockerSsh` option will mount your `$HOME/.ssh/` directory as a
 volume in the docker container. If your SSH key is password protected, you can use `ssh-agent`
 because `$SSH_AUTH_SOCK` is also mounted & the env var set.
 It is important that the host of your private repositories has already been added in your

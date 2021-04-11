@@ -8,12 +8,14 @@ const {
   removeSync,
   readFile,
   copySync,
+  ensureFileSync,
+  appendFileSync,
   writeFileSync,
   statSync,
   pathExistsSync
 } = require('fs-extra');
 const { quote } = require('shell-quote');
-const { sep } = require('path');
+const { sep, resolve } = require('path');
 
 const { getUserCachePath, sha256Path } = require('./lib/shared');
 
@@ -599,6 +601,35 @@ test(
     t.end();
   },
   { skip: !hasPython(2) }
+);
+
+test(
+  'dockerSsh mounts entire ssh folder into docker',
+  t => {
+    process.chdir('tests/base');
+    const path = npm(['pack', '../..']);
+    npm(['i', path]);
+    // create a known_hosts file with the rsa fingerprint of github
+    // the plugin should mount the entire .ssh directory into the container
+    const known_hosts_file = resolve(process.env.HOME, `./.ssh/known_hosts`);
+    ensureFileSync(known_hosts_file);
+    appendFileSync(
+      known_hosts_file,
+      'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=='
+    );
+    // verify this by installing a requirement via git+ssh
+    sls([
+      '--dockerizePip=true',
+      '--dockerSsh=true',
+      '--fileName=requirements-w-git-ssh.txt',
+      'package'
+    ]);
+    const zipfiles = listZipFiles('.serverless/sls-py-req-test.zip');
+    // check if the requirement is actually in the archive
+    t.true(zipfiles.includes(`boto3/__init__.py`), 'boto3 is packaged via ssh');
+    t.end();
+  },
+  { skip: !canUseDocker() }
 );
 
 test(

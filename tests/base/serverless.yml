@@ -10,6 +10,7 @@ custom:
   pythonRequirements:
     zip: ${opt:zip, self:custom.defaults.zip}
     dockerizePip: ${opt:dockerizePip, self:custom.defaults.dockerizePip}
+    dockerSsh: ${opt:dockerSsh, self:custom.defaults.dockerSsh}
     slim: ${opt:slim, self:custom.defaults.slim}
     slimPatterns: ${file(./slimPatterns.yml):slimPatterns, self:custom.defaults.slimPatterns}
     slimPatternsAppendDefaults: ${opt:slimPatternsAppendDefaults, self:custom.defaults.slimPatternsAppendDefaults}
@@ -24,6 +25,7 @@ custom:
     slimPatternsAppendDefaults: true
     zip: false
     dockerizePip: false
+    dockerSsh: false
     individually: false
     useStaticCache: true
     useDownloadCache: true
@@ -49,5 +51,3 @@ functions:
     package:
       include:
         - 'fn2/**'
-
-

@@ -1,0 +1,3 @@
+flask
+bottle
+git+ssh://git@github.com/boto/boto3.git#egg=boto3
