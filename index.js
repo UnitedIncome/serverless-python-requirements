@@ -116,6 +116,12 @@ class ServerlessPythonRequirements {
     this.servicePath = this.serverless.config.servicePath;
     this.warningLogged = false;
 
+    this.serverless.configSchemaHandler.defineFunctionProperties('aws', {
+      properties: {
+        module: {type: 'string'},
+      },
+    });
+
     this.commands = {
       requirements: {
         usage: 'Serverless plugin to bundle Python packages',
