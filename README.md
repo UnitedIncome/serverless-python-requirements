@@ -497,6 +497,17 @@ zipinfo .serverless/xxx.zip
 
 If you can't see the library, you might need to adjust your package include/exclude configuration in `serverless.yml`.
 
+If you would like to recursively include a directory and all of its contents, 
+prepend `-r ` to the file list member:
+
+```yaml
+custom:
+  pythonRequirements:
+    dockerExtraFiles:
+      - -r /path/to/additional/dependencies/
+```
+
+
 ## Optimising packaging time
 
 If you wish to exclude most of the files in your project, and only include the source files of your lambdas and their dependencies you may well use an approach like this:
