@@ -44,6 +44,7 @@ class ServerlessPythonRequirements {
             ? 'python.exe'
             : this.serverless.service.provider.runtime || 'python',
         dockerizePip: false,
+        dockerInDockerPath: false,
         dockerSsh: false,
         dockerImage: null,
         dockerFile: null,
