@@ -163,6 +163,18 @@ except ImportError:
   pass
 ```
 
+## Dealing with Lambda's size limitations #2
+
+If you don't want to zip your requirements, you can define a list of patterns in the serverless config using the `excluded`
+option and glob syntax
+
+```yaml
+custom:
+  pythonRequirements:
+    excluded:
+      - 'Crypto/SelfTest'
+```
+
 ### Slim Package
 
 _Works on non 'win32' environments: Docker, WSL are included_

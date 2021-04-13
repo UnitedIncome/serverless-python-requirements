@@ -16,12 +16,14 @@ custom:
     vendor: ${opt:vendor, ''}
     fileName: ${opt:fileName, 'requirements.txt'}
     useStaticCache: ${opt:useStaticCache, self:custom.defaults.useStaticCache}
+    excluded: ${file(./excluded.yml):excluded, self:custom.defaults.excluded}
     useDownloadCache: ${opt:useDownloadCache, self:custom.defaults.useDownloadCache}
     cacheLocation: ${opt:cacheLocation, ''}
   defaults:
     slim: false
     slimPatterns: false
     slimPatternsAppendDefaults: true
+    excluded: false
     zip: false
     dockerizePip: false
     individually: false

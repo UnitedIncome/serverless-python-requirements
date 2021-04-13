@@ -15,6 +15,7 @@ const { installAllRequirements } = require('./lib/pip');
 const { pipfileToRequirements } = require('./lib/pipenv');
 const { pyprojectTomlToRequirements } = require('./lib/poetry');
 const { cleanup, cleanupCache } = require('./lib/clean');
+const { removeExcluded } = require('./lib/exclude');
 
 BbPromise.promisifyAll(fse);
 
@@ -55,6 +56,7 @@ class ServerlessPythonRequirements {
         useDownloadCache: true,
         cacheLocation: false,
         staticCacheMaxVersions: 0,
+        excluded: [],
         pipCmdExtraArgs: [],
         noDeploy: [],
         vendor: ''
@@ -173,6 +175,7 @@ class ServerlessPythonRequirements {
         .then(pyprojectTomlToRequirements)
         .then(addVendorHelper)
         .then(installAllRequirements)
+        .then(removeExcluded)
         .then(packRequirements)
         .then(setupArtifactPathCapturing);
     };

@@ -245,6 +245,22 @@ test(
 );
 
 test(
+  'can package flask with excluded option',
+  async t => {
+    process.chdir('tests/base');
+    copySync('_excluded.yml', 'excluded.yml');
+    const path = npm(['pack', '../..']);
+    npm(['i', path]);
+    sls([`--pythonBin=${getPythonBin(3)}`, 'package']);
+    const zipfiles = await listZipFiles('.serverless/sls-py-req-test.zip');
+    t.true(zipfiles.includes(`flask${sep}__init__.py`), 'flask is packaged');
+    t.false(zipfiles.includes(`flask${sep}app.py`), 'flask.app.py is excluded');
+    t.end();
+  },
+  { skip: !hasPython(3.6) }
+);
+
+test(
   'py3.6 can package flask with hashes',
   async t => {
     process.chdir('tests/base');
