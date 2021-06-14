@@ -8,7 +8,18 @@
 A Serverless v1.x plugin to automatically bundle dependencies from
 `requirements.txt` and make them available in your `PYTHONPATH`.
 
-## Requires Serverless >= v1.34
+## Requirements
+
+ * Serverless >= v1.34
+ * Python >= 3.6
+
+### Python 2.7 note
+
+As of 6.0.0, Python 2.7 is no longer supported. This plugin delegates most work out to `pip`
+directly or indirectly, so it may continue to work, but:
+
+ * The test suite no longer includes 2.7 specific tests.
+ * Fixes for 2.7 specific bugs that require code branching by Python version will not be accepted.
 
 ## Install
 
@@ -383,8 +394,7 @@ Quick notes on the config file:
 
 ### Customize Python executable
 
-Sometimes your Python executable isn't available on your `$PATH` as `python2.7`
-or `python3.6` (for example, windows or using pyenv).
+Sometimes your Python executable isn't available on your `$PATH` as `python3.6`, possibly for example, on Windows or using pyenv.
 To support this, this plugin has the following option:
 
 ```yaml
