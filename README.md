@@ -343,6 +343,9 @@ custom:
 
 ### Per-function requirements
 
+**Note: this feature does not work with Pipenv/Poetry, it requires `requirements.txt`
+files for your Python modules.**
+
 If you have different python functions, with different sets of requirements, you can avoid
 including all the unecessary dependencies of your functions by using the following structure:
 
