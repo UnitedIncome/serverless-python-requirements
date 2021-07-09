@@ -215,6 +215,12 @@ class ServerlessPythonRequirements {
       'requirements:clean:clean': clean,
       'requirements:cleanCache:cleanCache': cleanCache
     };
+
+    this.serverless.configSchemaHandler.defineFunctionProperties("aws", {
+      properties: {
+        module: { type: "string" }
+      }
+    });
   }
 }
 
